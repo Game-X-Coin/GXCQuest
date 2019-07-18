@@ -40,11 +40,11 @@ module.exports = Inventory = Container.extend({
                 return GXC.getBalance(self.owner.username, symbol)
                 .then(function(response){
                     console.log(response.data);
-                    let balance = parseInt(response.data.balance || 0);
+                    let balance = parseInt(response.data.coin.balance || 0);
                     return GXC.increaseBalance(self.owner.username, symbol, count)
                     .then(function(response) {
                         console.log(response.data);
-                        balance = parseInt(response.data.balance || 0);
+                        balance = parseInt(response.data.coin.balance || 0);
                         var type = 'UPDATE IGNORE';
                         var updateData = { username: self.owner.username };
                         updateData[symbol] = balance;
@@ -140,7 +140,7 @@ module.exports = Inventory = Container.extend({
 
                 return GXC.decreaseBalance(self.owner.username, symbol, count)
                 .then(function(response) {
-                    const balance = parseInt(response.data.balance);
+                    const balance = parseInt(response.data.coin.balance);
                     var type = 'UPDATE IGNORE';
                     var updateData = { username: self.owner.username};
                     updateData[symbol] = balance;
